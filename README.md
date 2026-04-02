@@ -92,37 +92,35 @@ The project covers three main scenario families:
 
 The satellite state is defined as:
 
-\[
-x = [x,\ y,\ \psi,\ v_x,\ v_y,\ \dot{\psi}]
-\]
+```text
+x = [x, y, psi, v_x, v_y, dpsi]
+```
 
 where:
-- \((x, y)\) is position
-- \(\psi\) is heading
-- \((v_x, v_y)\) is translational velocity
-- \(\dot{\psi}\) is angular velocity
+- `(x, y)` is position
+- `psi` is heading
+- `(v_x, v_y)` is translational velocity
+- `dpsi` is angular velocity
 
 The control input is:
 
-\[
-u = [F_l,\ F_r]
-\]
+```text
+u = [F_l, F_r]
+```
 
-where \(F_l\) and \(F_r\) are the left and right thruster forces.
+where `F_l` and `F_r` are the left and right thruster forces.
 
 The continuous-time dynamics are:
 
-\[
-\dot{x} = v_x,\quad
-\dot{y} = v_y,\quad
-\dot{\psi} = \dot{\psi}
-\]
+```text
+dx/dt    = v_x
+dy/dt    = v_y
+dpsi/dt  = dpsi
 
-\[
-\dot{v}_x = \frac{\cos(\psi)}{m}(F_l + F_r),\quad
-\dot{v}_y = \frac{\sin(\psi)}{m}(F_l + F_r),\quad
-\ddot{\psi} = \frac{l_m}{I_z}(F_r - F_l)
-\]
+dv_x/dt  = cos(psi) / m  * (F_l + F_r)
+dv_y/dt  = sin(psi) / m  * (F_l + F_r)
+ddpsi/dt = l_m / I_z     * (F_r - F_l)
+```
 
 The final time is also optimized as part of the decision vector.
 
@@ -165,9 +163,9 @@ This initialization is especially useful when docking must be performed around m
 ## Optimization Structure
 
 The convex subproblem optimizes:
-- state trajectory \(X\)
-- control trajectory \(U\)
-- final time \(t_f\)
+- state trajectory `X`
+- control trajectory `U`
+- final time `t_f`
 - slack variables for dynamics, terminal constraints, control boundary conditions, and obstacle avoidance
 
 The objective combines:
@@ -177,18 +175,18 @@ The objective combines:
 - path regularity
 - slack penalties for infeasibility handling
 
-A representative objective is of the form:
+A representative objective is:
 
-\[
-J = J_u + J_t + J_{goal} + J_{path} + \lambda_\nu J_{slack}
-\]
+```text
+J = J_u + J_t + J_goal + J_path + lambda_nu * J_slack
+```
 
 where:
-- \(J_u\) penalizes thrust usage
-- \(J_t\) penalizes maneuver time
-- \(J_{goal}\) enforces precise terminal docking behavior
-- \(J_{path}\) regularizes trajectory evolution
-- \(J_{slack}\) penalizes violations of dynamics and safety constraints
+- `J_u` penalizes thrust usage
+- `J_t` penalizes maneuver time
+- `J_goal` enforces precise terminal docking behavior
+- `J_path` regularizes trajectory evolution
+- `J_slack` penalizes violations of dynamics and safety constraints
 
 ---
 
@@ -203,7 +201,7 @@ Linearized and discretized dynamics over the horizon using state-transition matr
 ### Control constraints
 
 Bounded thruster inputs:
-- \(F_l, F_r \in [-F_{\max}, F_{\max}]\)
+- `F_l, F_r ∈ [-F_max, F_max]`
 
 ### State-space constraints
 
@@ -237,9 +235,9 @@ The codebase includes dedicated discretization modules for local trajectory opti
 
 These modules compute the discrete-time linearized dynamics used by the convex subproblem:
 
-\[
-x_{k+1} = A_k x_k + B_k u_k + F_k t_f + r_k
-\]
+```text
+x_(k+1) = A_k x_k + B_k u_k + F_k t_f + r_k
+```
 
 or, in the FOH case, with interpolated control contributions across each interval.
 
@@ -255,7 +253,7 @@ The discretization layer also provides:
 The planner uses a trust-region update rule to stabilize successive convexification:
 
 - each convex subproblem is solved inside a bounded local trust region
-- candidate trajectories are evaluated using a model-accuracy ratio \(\rho\)
+- candidate trajectories are evaluated using a model-accuracy ratio `rho`
 - the trust region is expanded or contracted depending on solution quality
 - iterations stop when progress becomes sufficiently small
 
