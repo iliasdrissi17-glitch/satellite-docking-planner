@@ -1,4 +1,19 @@
 # Satellite Docking Planner
+Autonomous satellite docking planner for constrained 2D rendezvous problems.
+
+This project combines trajectory optimization, SCvx-style replanning, and obstacle avoidance to generate feasible docking trajectories under nonlinear dynamics and bounded thrust constraints.
+
+## Key points
+- Nonlinear spacecraft dynamics
+- SCvx-style trajectory optimization
+- Static and dynamic obstacle avoidance
+- Closed-loop replanning
+- Robust docking constraints
+
+## Quick start
+```bash
+pip install -r requirements.txt
+python -m examples.run_demo
 
 ## TL;DR
 
