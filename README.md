@@ -1,5 +1,13 @@
 # Satellite Docking Planner
 
+## TL;DR
+
+- Constrained 2D satellite rendezvous and docking planner under nonlinear dynamics, bounded thrust, terminal pose constraints, and obstacle avoidance.
+- Combines SCvx-style trajectory optimization, trust-region updates, and closed-loop replanning for robust execution.
+- Handles both static and dynamic obstacle fields, including moving asteroids through a time-aware A* initialization strategy.
+- Reached 98% success rate (59/60) with ~200 ms average solve time per replanning step on Apple M2 hardware.
+- Showcases a modular guidance, planning, and optimization stack for autonomous docking applications.
+
 A constrained trajectory planning and closed-loop replanning stack for 2D satellite rendezvous and docking under nonlinear dynamics, bounded thrust, terminal pose constraints, and obstacle avoidance.
 
 ## Highlights
