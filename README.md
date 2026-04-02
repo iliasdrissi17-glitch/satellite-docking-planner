@@ -56,7 +56,7 @@ The planner was evaluated across multiple scenarios, including static and dynami
 
 <p align="center">
   <img src="assets/videos/scenario3.gif" width="45%"/>
-  <img src="assets/videos/local_debug.gif" width="45%"/>
+  <img src="assets/videos/scenario4.gif" width="45%"/>
 </p>
 
 Additional scenario visualizations and videos are available in:
